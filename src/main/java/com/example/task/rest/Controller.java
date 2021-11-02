@@ -1,8 +1,6 @@
 package com.example.task.rest;
 
 import io.swagger.annotations.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.tempuri.*;
@@ -29,9 +27,9 @@ public class Controller {
     public Object Add(@RequestParam("intA") @ApiParam(value = "First value") int a,
                       @RequestParam("intB") @ApiParam(value = "Second value") int b) {
         Add add = objectFactory.createAdd();
+        AddResponse addResponse = objectFactory.createAddResponse();
         add.setIntA(a);
         add.setIntB(b);
-        AddResponse addResponse = objectFactory.createAddResponse();
         addResponse.setAddResult(calculator.getCalculatorSoap().add(a, b));
         return addResponse;
     }
@@ -55,9 +53,9 @@ public class Controller {
     public Object Multiply(@RequestParam("intA") @ApiParam(value = "First value") int a,
                            @RequestParam("intB") @ApiParam(value = "Second value") int b) {
         Multiply multiply = objectFactory.createMultiply();
+        MultiplyResponse multiplyResponse = objectFactory.createMultiplyResponse();
         multiply.setIntA(a);
         multiply.setIntB(b);
-        MultiplyResponse multiplyResponse = objectFactory.createMultiplyResponse();
         multiplyResponse.setMultiplyResult(calculator.getCalculatorSoap().divide(a, b));
         return multiplyResponse;
     }
@@ -68,9 +66,9 @@ public class Controller {
     public Object Subtract(@RequestParam("intA") @ApiParam(value = "First value") int a,
                            @RequestParam("intB") @ApiParam(value = "Second value") int b) {
         Subtract subtract = objectFactory.createSubtract();
+        SubtractResponse subtractResponse = objectFactory.createSubtractResponse();
         subtract.setIntA(a);
         subtract.setIntB(b);
-        SubtractResponse subtractResponse = objectFactory.createSubtractResponse();
         subtractResponse.setSubtractResult(calculator.getCalculatorSoap().subtract(a, b));
         return subtractResponse;
     }
