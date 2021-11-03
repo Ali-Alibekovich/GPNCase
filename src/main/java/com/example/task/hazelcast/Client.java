@@ -23,7 +23,6 @@ public abstract class Client {
     ClientStateListener clientStateListener;
 
     public Client() {
-        System.out.println(HOST + PORT);
         ClientConfig config = new ClientConfig();
         config.getNetworkConfig().getAddresses().clear();
         config.getNetworkConfig().getAddresses().add(HOST + ":" + PORT);
