@@ -22,7 +22,6 @@ import static com.example.task.utils.Validator.validateValues;
 @RequestMapping("/")
 @Api(value = "CalculatorAPI")
 public class Controller implements IController {
-
     final OperationService operationService;
     public Controller(OperationService operationService) {
         this.operationService = operationService;

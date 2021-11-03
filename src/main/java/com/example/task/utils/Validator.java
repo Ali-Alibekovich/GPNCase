@@ -1,6 +1,5 @@
 package com.example.task.utils;
 
-import org.springframework.stereotype.Component;
 import org.tempuri.Add;
 import org.tempuri.Divide;
 import org.tempuri.Multiply;

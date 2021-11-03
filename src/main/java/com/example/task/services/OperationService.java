@@ -6,8 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.tempuri.*;
+
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import static com.example.task.hazelcast.Client.isConnected;
 
 
 @Service
@@ -42,11 +45,15 @@ public class OperationService {
     @SneakyThrows
     public AddResponse add(Add add) {
         AddResponse addResponse = objectFactory.createAddResponse();
-        if (client.getAddMap().containsKey(objectMapper.writeValueAsString(add))) {
-            return (AddResponse) getFromCache(add);
+        if (isConnected) {
+            if (client.getAddMap().containsKey(objectMapper.writeValueAsString(add))) {
+                return (AddResponse) getFromCache(add);
+            } else {
+                addResponse.setAddResult(calculator.getCalculatorSoap().add(add.getIntA(), add.getIntB()));
+                putInCache(add, addResponse);
+            }
         } else {
             addResponse.setAddResult(calculator.getCalculatorSoap().add(add.getIntA(), add.getIntB()));
-            putInCache(add, addResponse);
         }
         return addResponse;
     }
@@ -54,11 +61,15 @@ public class OperationService {
     @SneakyThrows
     public DivideResponse divide(Divide divide) {
         DivideResponse divideResponse = objectFactory.createDivideResponse();
-        if (client.getDivideMap().containsKey(objectMapper.writeValueAsString(divide))) {
-            return (DivideResponse) getFromCache(divide);
+        if (isConnected) {
+            if (client.getAddMap().containsKey(objectMapper.writeValueAsString(divide))) {
+                return (DivideResponse) getFromCache(divide);
+            } else {
+                divideResponse.setDivideResult(calculator.getCalculatorSoap().add(divide.getIntA(), divide.getIntB()));
+                putInCache(divide, divideResponse);
+            }
         } else {
-            divideResponse.setDivideResult(calculator.getCalculatorSoap().divide(divide.getIntA(), divide.getIntB()));
-            putInCache(divide, divideResponse);
+            divideResponse.setDivideResult(calculator.getCalculatorSoap().add(divide.getIntA(), divide.getIntB()));
         }
         return divideResponse;
     }
@@ -66,11 +77,15 @@ public class OperationService {
     @SneakyThrows
     public MultiplyResponse multiply(Multiply multiply) {
         MultiplyResponse multiplyResponse = objectFactory.createMultiplyResponse();
-        if (client.getMultiplyMap().containsKey(objectMapper.writeValueAsString(multiply))) {
-            return (MultiplyResponse) getFromCache(multiply);
+        if (isConnected) {
+            if (client.getAddMap().containsKey(objectMapper.writeValueAsString(multiply))) {
+                return (MultiplyResponse) getFromCache(multiply);
+            } else {
+                multiplyResponse.setMultiplyResult(calculator.getCalculatorSoap().add(multiply.getIntA(), multiply.getIntB()));
+                putInCache(multiply, multiplyResponse);
+            }
         } else {
-            multiplyResponse.setMultiplyResult(calculator.getCalculatorSoap().multiply(multiply.getIntA(), multiply.getIntB()));
-            putInCache(multiply, multiplyResponse);
+            multiplyResponse.setMultiplyResult(calculator.getCalculatorSoap().add(multiply.getIntA(), multiply.getIntB()));
         }
         return multiplyResponse;
     }
@@ -78,14 +93,19 @@ public class OperationService {
     @SneakyThrows
     public SubtractResponse subtract(Subtract subtract) {
         SubtractResponse subtractResponse = objectFactory.createSubtractResponse();
-        if (client.getSubtractMap().containsKey(objectMapper.writeValueAsString(subtract))) {
-            return (SubtractResponse) getFromCache(subtract);
+        if (isConnected) {
+            if (client.getAddMap().containsKey(objectMapper.writeValueAsString(subtract))) {
+                return (SubtractResponse) getFromCache(subtract);
+            } else {
+                subtractResponse.setSubtractResult(calculator.getCalculatorSoap().add(subtract.getIntA(), subtract.getIntB()));
+                putInCache(subtract,subtractResponse);
+            }
         } else {
-            subtractResponse.setSubtractResult(calculator.getCalculatorSoap().subtract(subtract.getIntA(), subtract.getIntB()));
-            putInCache(subtract, subtractResponse);
+            subtractResponse.setSubtractResult(calculator.getCalculatorSoap().add(subtract.getIntA(), subtract.getIntB()));
         }
         return subtractResponse;
     }
+
 
     /*
      * Обращение к Клиенту Hazelcast для сохранения объекта в кеш
