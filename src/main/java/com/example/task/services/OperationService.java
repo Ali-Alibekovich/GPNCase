@@ -1,7 +1,6 @@
 package com.example.task.services;
 
-import com.example.task.hazelcast.Client;
-import com.example.task.hazelcast.Clients.CalculatorClient;
+import com.example.task.hazelcast.exClient.CalculatorClient;
 import com.example.task.rest.controllerImpl.Controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;

@@ -6,12 +6,9 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.util.ClientStateListener;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.LifecycleEvent;
-import com.hazelcast.map.IMap;
-import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.tempuri.*;
 
 import static com.hazelcast.core.LifecycleEvent.LifecycleState.CLIENT_DISCONNECTED;
 
@@ -26,23 +23,33 @@ public abstract class Client {
     ClientStateListener clientStateListener;
 
     public Client() {
-        System.out.println(HOST+PORT);
+        System.out.println(HOST + PORT);
         ClientConfig config = new ClientConfig();
         config.getNetworkConfig().getAddresses().clear();
-        config.getNetworkConfig().getAddresses().add(HOST+":"+PORT);
+        config.getNetworkConfig().getAddresses().add(HOST + ":" + PORT);
         config.getConnectionStrategyConfig().setAsyncStart(true).getConnectionRetryConfig().setInitialBackoffMillis(10000);
         clientStateListener = new ClientStateListener(config);
         client = HazelcastClient.newHazelcastClient(config);
+        //Это не баг, а фитча
+        isConnected = clientStateListener.isConnected();
+        if(isConnected){
+            logger.info("This connection because application start after server");
+            initIMap();
+        }
         client.getLifecycleService().addLifecycleListener(event -> {
-            if(event.getState() == LifecycleEvent.LifecycleState.CLIENT_CONNECTED){
-                initIMap();
-                isConnected=true;
-            }
-            if(event.getState() == CLIENT_DISCONNECTED){
-                isConnected=false;
-            }
-        });
+                    if (event.getState() == LifecycleEvent.LifecycleState.CLIENT_CONNECTED) {
+                        logger.info("This connection because server start after application");
+                        initIMap();
+                        isConnected = true;
+                    }
+                    if (event.getState() == CLIENT_DISCONNECTED) {
+                        logger.info("Disconnected");
+                        isConnected = false;
+                    }
+                }
+        );
     }
+
 
     public abstract void initIMap();
 

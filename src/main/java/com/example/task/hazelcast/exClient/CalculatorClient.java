@@ -1,4 +1,4 @@
-package com.example.task.hazelcast.Clients;
+package com.example.task.hazelcast.exClient;
 
 import com.example.task.hazelcast.Client;
 import com.hazelcast.map.IMap;

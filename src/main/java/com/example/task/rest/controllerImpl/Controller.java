@@ -1,15 +1,15 @@
 package com.example.task.rest.controllerImpl;
 
-import com.example.task.services.OperationService;
 import com.example.task.rest.IController;
-import io.swagger.annotations.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import com.example.task.services.OperationService;
+import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.tempuri.Add;
 import org.tempuri.Divide;
 import org.tempuri.Multiply;
 import org.tempuri.Subtract;
+
 import javax.ws.rs.core.Response;
 
 import static com.example.task.utils.Validator.validateValues;
