@@ -35,7 +35,6 @@ public class Controller implements IController {
 
     @Override
     public Response Divide(Divide divide) {
-        System.out.println(divide.getIntA());
         if(!validateValues(divide)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Деление на 0");
         }

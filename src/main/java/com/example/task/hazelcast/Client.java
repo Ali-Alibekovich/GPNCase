@@ -7,9 +7,12 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.tempuri.*;
+
 
 @Component
 public class Client {
@@ -17,6 +20,7 @@ public class Client {
     protected IMap<String, String> divideMap;
     protected IMap<String, String> multiplyMap;
     protected IMap<String, String> subtractMap;
+    final Logger logger = LoggerFactory.getLogger(Client.class);
     ObjectMapper objectMapper = new ObjectMapper();
 
     /*
@@ -40,6 +44,7 @@ public class Client {
     public void addOperation(Object request, Object response) {
         String key = objectMapper.writeValueAsString(request);
         String value = objectMapper.writeValueAsString(response);
+        logger.info("Insert into cache key: {} value: {}", key, value);
         if (request instanceof Add) {
             this.addMap.set(key, value);
         }
@@ -60,7 +65,7 @@ public class Client {
     @SneakyThrows
     public Object getOperation(Object request) {
         String key = objectMapper.writeValueAsString(request);
-
+        logger.info("Getting {} from cache", key);
         if (request instanceof Add) {
             return objectMapper.readValue(this.addMap.get(key), AddResponse.class);
         }

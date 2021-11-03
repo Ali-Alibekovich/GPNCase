@@ -31,7 +31,6 @@ public class OperationService {
     final private Client client;
     public final ObjectFactory objectFactory = new ObjectFactory();
     public final ObjectMapper objectMapper = new ObjectMapper();
-    final Logger logger = Logger.getAnonymousLogger();
 
     public OperationService(Client client) {
         this.client = client;
@@ -93,7 +92,6 @@ public class OperationService {
      * Обращение к Клиенту Hazelcast для сохранения объекта в кеш
      */
     public void putInCache(Object request, Object response) {
-        logger.info("Put in the Cache");
         client.addOperation(request, response);
     }
 
@@ -101,7 +99,6 @@ public class OperationService {
      * Обращение к Клиенту Hazelcast для взятия объекта из кеша
      */
     public Object getFromCache(Object request) {
-        logger.info("Getting from the Cache");
         return client.getOperation(request);
     }
 
