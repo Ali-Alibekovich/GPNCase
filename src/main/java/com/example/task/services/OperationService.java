@@ -4,7 +4,6 @@ import com.example.task.hazelcast.Client;
 import com.example.task.rest.controllerImpl.Controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tempuri.*;
 

@@ -1,5 +1,7 @@
 package com.example.task.utils;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import org.tempuri.Add;
 import org.tempuri.Divide;
 import org.tempuri.Multiply;
@@ -9,20 +11,18 @@ import org.tempuri.Subtract;
  * Values validator
  */
 public class Validator {
-    public static boolean validateValues(Object object) {
+    public static void validateValues(Object object) {
         if (object instanceof Add) {
-            return true;
+
+        } else if (object instanceof Divide) {
+            if(((Divide) object).getIntB() == 0){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Деление на 0");
+            }
+        } else if (object instanceof Multiply) {
+
+        } else if (object instanceof Subtract) {
+
         }
-        if (object instanceof Divide) {
-            return ((Divide) object).getIntB() != 0;
-        }
-        if (object instanceof Multiply) {
-            return true;
-        }
-        if (object instanceof Subtract) {
-            return true;
-        }
-        return false;
     }
 
 }

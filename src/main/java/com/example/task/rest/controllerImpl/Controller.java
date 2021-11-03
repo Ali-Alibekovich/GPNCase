@@ -34,9 +34,7 @@ public class Controller implements IController {
 
     @Override
     public Response Divide(Divide divide) {
-        if(!validateValues(divide)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Деление на 0");
-        }
+        validateValues(divide);
         return Response.ok(operationService.divide(divide)).build();
     }
 

@@ -6,7 +6,6 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.util.ClientStateListener;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.LifecycleEvent;
-import com.hazelcast.core.LifecycleListener;
 import com.hazelcast.map.IMap;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
@@ -38,19 +37,15 @@ public class Client {
         config.getConnectionStrategyConfig().setAsyncStart(true).getConnectionRetryConfig().setInitialBackoffMillis(10000);
         clientStateListener = new ClientStateListener(config);
         client = HazelcastClient.newHazelcastClient(config);
-        client.getLifecycleService().addLifecycleListener(new LifecycleListener() {
-            @Override
-            public void stateChanged(LifecycleEvent event) {
-                if(event.getState() == LifecycleEvent.LifecycleState.CLIENT_CONNECTED){
-                    initClient();
-                    isConnected=true;
-                }
-                if(event.getState() == CLIENT_DISCONNECTED){
-                    isConnected=false;
-                }
+        client.getLifecycleService().addLifecycleListener(event -> {
+            if(event.getState() == LifecycleEvent.LifecycleState.CLIENT_CONNECTED){
+                initClient();
+                isConnected=true;
+            }
+            if(event.getState() == CLIENT_DISCONNECTED){
+                isConnected=false;
             }
         });
-
     }
 
     /*
@@ -113,15 +108,4 @@ public class Client {
         return addMap;
     }
 
-    public IMap<String, String> getDivideMap() {
-        return divideMap;
-    }
-
-    public IMap<String, String> getMultiplyMap() {
-        return multiplyMap;
-    }
-
-    public IMap<String, String> getSubtractMap() {
-        return subtractMap;
-    }
 }
