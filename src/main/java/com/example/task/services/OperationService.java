@@ -4,6 +4,7 @@ import com.example.task.hazelcast.Client;
 import com.example.task.rest.controllerImpl.Controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tempuri.*;
 
@@ -30,7 +31,7 @@ public class OperationService {
 
     public final Calculator calculator = new Calculator(url);
 
-    final private Client client;
+    private final Client client;
     public final ObjectFactory objectFactory = new ObjectFactory();
     public final ObjectMapper objectMapper = new ObjectMapper();
 
