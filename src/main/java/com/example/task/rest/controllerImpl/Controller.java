@@ -1,6 +1,6 @@
 package com.example.task.rest.controllerImpl;
 
-import com.example.task.Services.OperationService;
+import com.example.task.services.OperationService;
 import com.example.task.rest.IController;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.example.task.Services;
+package com.example.task.services;
 
 import com.example.task.hazelcast.Client;
 import com.example.task.rest.controllerImpl.Controller;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.tempuri.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Logger;
 
 
 @Service
