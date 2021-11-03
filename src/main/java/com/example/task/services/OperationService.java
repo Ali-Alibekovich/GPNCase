@@ -1,6 +1,7 @@
 package com.example.task.services;
 
 import com.example.task.hazelcast.Client;
+import com.example.task.hazelcast.Clients.CalculatorClient;
 import com.example.task.rest.controllerImpl.Controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -30,11 +31,11 @@ public class OperationService {
 
     public final Calculator calculator = new Calculator(url);
 
-    private final Client client;
+    private final CalculatorClient client;
     public final ObjectFactory objectFactory = new ObjectFactory();
     public final ObjectMapper objectMapper = new ObjectMapper();
 
-    public OperationService(Client client) {
+    public OperationService(CalculatorClient client) {
         this.client = client;
     }
 
@@ -62,7 +63,7 @@ public class OperationService {
     public DivideResponse divide(Divide divide) {
         DivideResponse divideResponse = objectFactory.createDivideResponse();
         if (isConnected) {
-            if (client.getAddMap().containsKey(objectMapper.writeValueAsString(divide))) {
+            if (client.getDivideMap().containsKey(objectMapper.writeValueAsString(divide))) {
                 return (DivideResponse) getFromCache(divide);
             } else {
                 divideResponse.setDivideResult(calculator.getCalculatorSoap().add(divide.getIntA(), divide.getIntB()));
@@ -78,7 +79,7 @@ public class OperationService {
     public MultiplyResponse multiply(Multiply multiply) {
         MultiplyResponse multiplyResponse = objectFactory.createMultiplyResponse();
         if (isConnected) {
-            if (client.getAddMap().containsKey(objectMapper.writeValueAsString(multiply))) {
+            if (client.getMultiplyMap().containsKey(objectMapper.writeValueAsString(multiply))) {
                 return (MultiplyResponse) getFromCache(multiply);
             } else {
                 multiplyResponse.setMultiplyResult(calculator.getCalculatorSoap().add(multiply.getIntA(), multiply.getIntB()));
@@ -94,7 +95,7 @@ public class OperationService {
     public SubtractResponse subtract(Subtract subtract) {
         SubtractResponse subtractResponse = objectFactory.createSubtractResponse();
         if (isConnected) {
-            if (client.getAddMap().containsKey(objectMapper.writeValueAsString(subtract))) {
+            if (client.getSubtractMap().containsKey(objectMapper.writeValueAsString(subtract))) {
                 return (SubtractResponse) getFromCache(subtract);
             } else {
                 subtractResponse.setSubtractResult(calculator.getCalculatorSoap().add(subtract.getIntA(), subtract.getIntB()));

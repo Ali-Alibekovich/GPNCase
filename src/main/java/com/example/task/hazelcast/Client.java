@@ -16,17 +16,13 @@ import org.tempuri.*;
 import static com.hazelcast.core.LifecycleEvent.LifecycleState.CLIENT_DISCONNECTED;
 
 @Component
-public class Client {
+public abstract class Client {
     public static boolean isConnected = false;
     public static String HOST = "127.0.0.1";
     public static String PORT = "5701";
-    protected IMap<String, String> addMap;
-    protected IMap<String, String> divideMap;
-    protected IMap<String, String> multiplyMap;
-    protected IMap<String, String> subtractMap;
-    final Logger logger = LoggerFactory.getLogger(Client.class);
-    ObjectMapper objectMapper = new ObjectMapper();
-    HazelcastInstance client;
+    protected final Logger logger = LoggerFactory.getLogger(Client.class);
+    protected ObjectMapper objectMapper = new ObjectMapper();
+    public HazelcastInstance client;
     ClientStateListener clientStateListener;
 
     public Client() {
@@ -39,7 +35,7 @@ public class Client {
         client = HazelcastClient.newHazelcastClient(config);
         client.getLifecycleService().addLifecycleListener(event -> {
             if(event.getState() == LifecycleEvent.LifecycleState.CLIENT_CONNECTED){
-                initClient();
+                initIMap();
                 isConnected=true;
             }
             if(event.getState() == CLIENT_DISCONNECTED){
@@ -48,64 +44,12 @@ public class Client {
         });
     }
 
-    /*
-     * Создание клиента и подключение к HazelCast server локально.
-     * maps - хранилище операций
-     */
-    public void initClient() {
-        this.addMap = client.getMap("Add");
-        this.divideMap = client.getMap("Divide");
-        this.multiplyMap = client.getMap("Multiply");
-        this.subtractMap = client.getMap("Subtract");
-    }
-
-    /*
-     * Добавляет в соответствующий IMAP запрос и результат в виде строки
-     */
-    @SneakyThrows
-    public void addOperation(Object request, Object response) {
-        String key = objectMapper.writeValueAsString(request);
-        String value = objectMapper.writeValueAsString(response);
-        logger.info("Insert into cache key: {} value: {}", key, value);
-        if (request instanceof Add) {
-            this.addMap.set(key, value);
-        }
-        if (request instanceof Divide) {
-            this.divideMap.set(key, value);
-        }
-        if (request instanceof Multiply) {
-            this.multiplyMap.set(key, value);
-        }
-        if (request instanceof Subtract) {
-            this.subtractMap.set(key, value);
-        }
-    }
-
-    /*
-     * Берет из IMAP значение по ключу (ключ: объект -> строка) и преобразует его в соответствующий тип
-     */
-    @SneakyThrows
-    public Object getOperation(Object request) {
-        String key = objectMapper.writeValueAsString(request);
-        logger.info("Getting {} from cache", key);
-        if (request instanceof Add) {
-            return objectMapper.readValue(this.addMap.get(key), AddResponse.class);
-        }
-        if (request instanceof Divide) {
-            return objectMapper.readValue(this.divideMap.get(key), DivideResponse.class);
-        }
-        if (request instanceof Multiply) {
-            return objectMapper.readValue(this.multiplyMap.get(key), MultiplyResponse.class);
-        }
-        if (request instanceof Subtract) {
-            return objectMapper.readValue(this.subtractMap.get(key), SubtractResponse.class);
-        }
-        return null;
-    }
+    public abstract void initIMap();
 
 
-    public IMap<String, String> getAddMap() {
-        return addMap;
-    }
+    public abstract void addOperation(Object request, Object response);
+
+
+    public abstract Object getOperation(Object request);
 
 }
