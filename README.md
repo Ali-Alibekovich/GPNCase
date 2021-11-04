@@ -19,4 +19,4 @@
 
 # Монтиторинг Clinets и Members
 
-<h4>По <a href="https://hazelcast.com/open-source-projects/downloads/#management-center">ссылке</a> можно скачать zip. Запустив /bin/start.sh(bat) можно мониторить клиентов и member'ов. По умолчанию hazelcast menagement center запускается на localhost:8080, но можно 1 аргументом исполняемого файла указать порт.</h4>
+<h4>По <a href="https://hazelcast.com/open-source-projects/downloads/#management-center">ссылке</a> можно скачать Hazelcast Management Center zip. Запустив /bin/start.sh(bat) можно мониторить клиентов и member'ов. По умолчанию hazelcast menagement center запускается на localhost:8080, но можно 1 аргументом исполняемого файла указать порт.</h4>
