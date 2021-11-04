@@ -5,10 +5,10 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import org.tempuri.AddResponse;
 
+/*
+ * Сервер Hazelcast (Запускается отдельно).
+ */
 public class Server {
-    /*
-     * Сервер Hazelcast (Запускается отдельно).
-     */
     public static void main(String[] args) {
         Config config = new Config();
         config.getNetworkConfig().setPublicAddress(args.length==1?args[0]:"127.0.0.1")

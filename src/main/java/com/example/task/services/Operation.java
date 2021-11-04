@@ -14,6 +14,12 @@ import java.net.URL;
 import static com.example.task.hazelcast.Client.isConnected;
 
 
+/*
+ * Тут основная логика которая делегируется контроллером
+ *  + проверка на наличие в кеше значений
+ *  + проверка наличия соединения с кешем
+ *  + если нет соединения запросы идут сразу на сервер
+ */
 @Service
 public class Operation {
     public static final String SOAP_URL = "http://www.dneonline.com/calculator.asmx";

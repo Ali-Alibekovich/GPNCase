@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 import org.tempuri.*;
 
 /*
- * Интерфейс контроллера
+ * Интерфейс контроллера для будущих реализаций контроллеров
  */
 public interface IController {
 

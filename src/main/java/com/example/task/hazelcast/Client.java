@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 import static com.hazelcast.core.LifecycleEvent.LifecycleState.CLIENT_DISCONNECTED;
 
+/*
+ * Тут происходит подключение клиента к серверу HazelCast и слушание изменений состояния сервера
+ */
 @Component
 public class Client {
     public static boolean isConnected = false;
@@ -22,6 +25,10 @@ public class Client {
     ClientStateListener clientStateListener;
 
     public Client() {
+        initClient();
+    }
+
+    private void initClient(){
         ClientConfig config = new ClientConfig();
         config.getNetworkConfig().getAddresses().clear();
         config.getNetworkConfig().getAddresses().add(HOST + ":" + PORT);

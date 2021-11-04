@@ -9,6 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/*
+ * Тут происходит взаимодействие с кешем сервера
+ */
 @Component
 public class CalculatorClient implements IClientService {
     private final Client client;
