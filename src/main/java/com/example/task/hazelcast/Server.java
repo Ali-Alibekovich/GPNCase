@@ -17,7 +17,6 @@ public class Server {
         config.getJetConfig().setEnabled(true);
         HazelcastInstance server = Hazelcast.newHazelcastInstance(config);
         Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
-        System.out.println(server.getMap(AddResponse.class.getName()).size());
     }
 
 }
