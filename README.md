@@ -17,6 +17,6 @@
 <h4> <a href="https://github.com/Ali-Alibekovich/GPNCase/blob/main/src/main/java/com/example/task/TaskApplication.java">Spring Application</a> может принимать 2 аргумента - хост и порт для подключения к Hazelcast Server (по умолчанию "127.0.0.1","5701"). (порядок ввода : хост, порт)</h4>
 <h4> <a href="https://github.com/Ali-Alibekovich/GPNCase/blob/main/src/main/java/com/example/task/hazelcast/Server.java">Hazelcast Server</a> по умолчанию работает на 127.0.0.1, но публичный хост или порт можно задать и через параметры запуска. (порядок ввода : хост, порт)</h4>
 
-## Монтиторинг Members
+# Монтиторинг Clinets и Members
 
-<h4>По <a href"https://hazelcast.com/open-source-projects/downloads/#management-center">ссылке</a> можно скачать zip. Запустив /bin/start.sh(bat) можно мониторить клиентов и member'ов. По умолчанию hazelcast menagement center запускается на localhost:8080, но можно 1 аргументом исполняемого файла указать порт.</h4>
+<h4>По <a href="https://hazelcast.com/open-source-projects/downloads/#management-center">ссылке</a> можно скачать Hazelcast Management Center zip. Запустив /bin/start.sh(bat) можно мониторить клиентов и member'ов. По умолчанию hazelcast menagement center запускается на localhost:8080, но можно 1 аргументом исполняемого файла указать порт.</h4>
