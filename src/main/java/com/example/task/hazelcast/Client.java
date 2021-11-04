@@ -35,7 +35,6 @@ public class Client {
         config.getConnectionStrategyConfig().setAsyncStart(true).getConnectionRetryConfig().setInitialBackoffMillis(10000);
         clientStateListener = new ClientStateListener(config);
         connection = HazelcastClient.newHazelcastClient(config);
-        //Это не баг, а фитча
         isConnected = clientStateListener.isConnected();
         if(isConnected){
             logger.info("This connection because application start after server");
