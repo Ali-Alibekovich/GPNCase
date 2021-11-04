@@ -7,12 +7,12 @@ import com.hazelcast.map.IMap;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /*
  * Тут происходит взаимодействие с кешем сервера
  */
-@Component
+@Service
 public class CalculatorCacheClient implements ICacheClientService {
     private final Client client;
     private final ObjectMapper objectMapper = new ObjectMapper();
