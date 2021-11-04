@@ -18,6 +18,5 @@
 <h4> <a href="https://github.com/Ali-Alibekovich/GPNCase/blob/main/src/main/java/com/example/task/hazelcast/Server.java">Hazelcast Server</a> по умолчанию работает на 127.0.0.1, но публичный хост или порт можно задать и через параметры запуска. (порядок ввода : хост, порт)</h4>
 
 ## Монтиторинг Members
-<h4>В проекте так же приложена папка (hazelcast-management) с файлом /bin/start.sh(bat) предназначена для мониторинга клиентов и member'ов. По умолчанию запускается на localhost:8080, но можно 1 аргументом исполняемого файла указать порт.</h4>
 
-<h4> Ссылка для запуска API мониторинга hazelcaste <a href = "http://localhost:[port]/clusters/dev">http://localhost:[port]/clusters/dev/members</a> </h4>
+<h4>По <a href"https://hazelcast.com/open-source-projects/downloads/#management-center">ссылке</a> можно скачать zip. Запустив /bin/start.sh(bat) можно мониторить клиентов и member'ов. По умолчанию hazelcast menagement center запускается на localhost:8080, но можно 1 аргументом исполняемого файла указать порт.</h4>
