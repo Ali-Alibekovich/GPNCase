@@ -11,8 +11,10 @@ import org.tempuri.AddResponse;
 public class Server {
     public static void main(String[] args) {
         Config config = new Config();
+        config.getNetworkConfig().getRestApiConfig().setEnabled(true);
         config.getNetworkConfig().setPublicAddress(args.length==1?args[0]:"127.0.0.1")
                 .setPort(args.length==2?Integer.parseInt(args[1]):5701);
+        config.getJetConfig().setEnabled(true);
         HazelcastInstance server = Hazelcast.newHazelcastInstance(config);
         Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
         System.out.println(server.getMap(AddResponse.class.getName()).size());
