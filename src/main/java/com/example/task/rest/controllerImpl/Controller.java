@@ -1,7 +1,7 @@
 package com.example.task.rest.controllerImpl;
 
 import com.example.task.rest.IController;
-import com.example.task.services.Operation;
+import com.example.task.services.operationService.operationServiceImpl.Operation;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,7 +1,7 @@
-package com.example.task.hazelcast.clientService.clientServiceImpl;
+package com.example.task.services.cacheService.cacheServiceImpl;
 
 import com.example.task.hazelcast.Client;
-import com.example.task.hazelcast.clientService.IClientService;
+import com.example.task.services.cacheService.ICacheClientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hazelcast.map.IMap;
 import lombok.SneakyThrows;
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
  * Тут происходит взаимодействие с кешем сервера
  */
 @Component
-public class CalculatorClient implements IClientService {
+public class CalculatorCacheClient implements ICacheClientService {
     private final Client client;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final Logger logger = LoggerFactory.getLogger(CalculatorClient.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(CalculatorCacheClient.class.getName());
     private IMap<Object, Object> map;
 
-    CalculatorClient(Client client) {
+    CalculatorCacheClient(Client client) {
         this.client = client;
     }
 

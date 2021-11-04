@@ -1,8 +1,9 @@
-package com.example.task.services;
+package com.example.task.services.operationService.operationServiceImpl;
 
-import com.example.task.hazelcast.clientService.clientServiceImpl.CalculatorClient;
-import com.example.task.hazelcast.clientService.IClientService;
+import com.example.task.services.cacheService.cacheServiceImpl.CalculatorCacheClient;
+import com.example.task.services.cacheService.ICacheClientService;
 import com.example.task.rest.controllerImpl.Controller;
+import com.example.task.services.operationService.OperationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import static com.example.task.hazelcast.Client.isConnected;
  *  + если нет соединения запросы идут сразу на сервер
  */
 @Service
-public class Operation {
+public class Operation implements OperationService {
     public static final String SOAP_URL = "http://www.dneonline.com/calculator.asmx";
     public URL url = null;
 
@@ -37,11 +38,11 @@ public class Operation {
 
     public final Calculator calculator = new Calculator(url);
 
-    private final IClientService client;
+    private final ICacheClientService client;
     public final ObjectFactory objectFactory = new ObjectFactory();
     public final ObjectMapper objectMapper = new ObjectMapper();
 
-    public Operation(CalculatorClient client) {
+    public Operation(CalculatorCacheClient client) {
         this.client = client;
     }
 
