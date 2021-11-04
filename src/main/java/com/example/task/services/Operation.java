@@ -1,6 +1,7 @@
 package com.example.task.services;
 
-import com.example.task.hazelcast.exClient.CalculatorClient;
+import com.example.task.hazelcast.clientService.clientServiceImpl.CalculatorClient;
+import com.example.task.hazelcast.clientService.IClientService;
 import com.example.task.rest.controllerImpl.Controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -14,7 +15,7 @@ import static com.example.task.hazelcast.Client.isConnected;
 
 
 @Service
-public class OperationService {
+public class Operation {
     public static final String SOAP_URL = "http://www.dneonline.com/calculator.asmx";
     public URL url = null;
 
@@ -30,11 +31,11 @@ public class OperationService {
 
     public final Calculator calculator = new Calculator(url);
 
-    private final CalculatorClient client;
+    private final IClientService client;
     public final ObjectFactory objectFactory = new ObjectFactory();
     public final ObjectMapper objectMapper = new ObjectMapper();
 
-    public OperationService(CalculatorClient client) {
+    public Operation(CalculatorClient client) {
         this.client = client;
     }
 
@@ -46,8 +47,8 @@ public class OperationService {
     public AddResponse add(Add add) {
         AddResponse addResponse = objectFactory.createAddResponse();
         if (isConnected) {
-            if (client.getAddMap().containsKey(objectMapper.writeValueAsString(add))) {
-                return (AddResponse) getFromCache(add);
+            if (client.getMap(addResponse.getClass().getName()).containsKey(objectMapper.writeValueAsString(add))) {
+                return (AddResponse) getFromCache(add, addResponse);
             } else {
                 addResponse.setAddResult(calculator.getCalculatorSoap().add(add.getIntA(), add.getIntB()));
                 putInCache(add, addResponse);
@@ -62,8 +63,8 @@ public class OperationService {
     public DivideResponse divide(Divide divide) {
         DivideResponse divideResponse = objectFactory.createDivideResponse();
         if (isConnected) {
-            if (client.getDivideMap().containsKey(objectMapper.writeValueAsString(divide))) {
-                return (DivideResponse) getFromCache(divide);
+            if (client.getMap(divideResponse.getClass().getName()).containsKey(objectMapper.writeValueAsString(divide))) {
+                return (DivideResponse) getFromCache(divide, divideResponse);
             } else {
                 divideResponse.setDivideResult(calculator.getCalculatorSoap().add(divide.getIntA(), divide.getIntB()));
                 putInCache(divide, divideResponse);
@@ -78,8 +79,8 @@ public class OperationService {
     public MultiplyResponse multiply(Multiply multiply) {
         MultiplyResponse multiplyResponse = objectFactory.createMultiplyResponse();
         if (isConnected) {
-            if (client.getMultiplyMap().containsKey(objectMapper.writeValueAsString(multiply))) {
-                return (MultiplyResponse) getFromCache(multiply);
+            if (client.getMap(multiplyResponse.getClass().getName()).containsKey(objectMapper.writeValueAsString(multiply))) {
+                return (MultiplyResponse) getFromCache(multiply, multiplyResponse);
             } else {
                 multiplyResponse.setMultiplyResult(calculator.getCalculatorSoap().add(multiply.getIntA(), multiply.getIntB()));
                 putInCache(multiply, multiplyResponse);
@@ -94,8 +95,8 @@ public class OperationService {
     public SubtractResponse subtract(Subtract subtract) {
         SubtractResponse subtractResponse = objectFactory.createSubtractResponse();
         if (isConnected) {
-            if (client.getSubtractMap().containsKey(objectMapper.writeValueAsString(subtract))) {
-                return (SubtractResponse) getFromCache(subtract);
+            if (client.getMap(subtractResponse.getClass().getName()).containsKey(objectMapper.writeValueAsString(subtract))) {
+                return (SubtractResponse) getFromCache(subtract, subtractResponse);
             } else {
                 subtractResponse.setSubtractResult(calculator.getCalculatorSoap().add(subtract.getIntA(), subtract.getIntB()));
                 putInCache(subtract,subtractResponse);
@@ -117,8 +118,9 @@ public class OperationService {
     /*
      * Обращение к Клиенту Hazelcast для взятия объекта из кеша
      */
-    public Object getFromCache(Object request) {
-        return client.getOperation(request);
+    public Object getFromCache(Object request, Object response) {
+        response = client.getOperation(request,response);
+        return response;
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.task.hazelcast;
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import org.tempuri.AddResponse;
 
 public class Server {
     /*
@@ -14,6 +15,7 @@ public class Server {
                 .setPort(args.length==2?Integer.parseInt(args[1]):5701);
         HazelcastInstance server = Hazelcast.newHazelcastInstance(config);
         Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
+        System.out.println(server.getMap(AddResponse.class.getName()).size());
     }
 
 }
