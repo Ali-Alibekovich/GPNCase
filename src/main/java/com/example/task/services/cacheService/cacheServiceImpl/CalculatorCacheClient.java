@@ -50,4 +50,8 @@ public class CalculatorCacheClient implements ICacheClientService {
         return map;
     }
 
+    boolean isConnected(){
+        return this.client.isConnected();
+    }
+
 }

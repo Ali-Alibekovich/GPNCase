@@ -17,7 +17,7 @@ import static com.hazelcast.core.LifecycleEvent.LifecycleState.CLIENT_DISCONNECT
  */
 @Component
 public class Client {
-    public static boolean isConnected = false;
+    public boolean isConnected = false;
     public static String HOST = "127.0.0.1";
     public static String PORT = "5701";
     protected final Logger logger = LoggerFactory.getLogger(Client.class);
@@ -52,4 +52,7 @@ public class Client {
         );
     }
 
+    public boolean isConnected() {
+        return isConnected;
+    }
 }
