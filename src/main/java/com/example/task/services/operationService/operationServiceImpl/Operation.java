@@ -22,7 +22,7 @@ import java.net.URL;
  */
 @Service
 public class Operation implements OperationService {
-    public static final String SOAP_URL = "http://www.dneonline.com/calculator.asmx";
+    public final String SOAP_URL = "http://www.dneonline.com/calculator.asmx";
     public URL url = null;
 
     {
