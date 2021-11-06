@@ -14,4 +14,6 @@ public interface ICacheClientService {
     Object getOperation(Object request, Object response);
 
     IMap<Object, Object> getMap(String name);
+
+    boolean isConnected();
 }

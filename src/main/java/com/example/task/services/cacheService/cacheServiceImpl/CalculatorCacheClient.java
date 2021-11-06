@@ -49,4 +49,11 @@ public class CalculatorCacheClient implements ICacheClientService {
         initMap(name);
         return map;
     }
+
+    @Override
+    public boolean isConnected() {
+        return client.isConnected;
+    }
+
+
 }

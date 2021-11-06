@@ -36,16 +36,13 @@ public class Operation implements OperationService {
     }
 
     public final Calculator calculator = new Calculator(url);
-    //Клиент для подключения к кешу
-    private final Client client;
-    //Интерфейс для взаимодействия с кешем
+    //Для взаимодействия с кешем
     private final ICacheClientService cacheClientService;
     //прочее
     public final ObjectFactory objectFactory = new ObjectFactory();
     public final ObjectMapper objectMapper = new ObjectMapper();
 
-    public Operation(Client client, CalculatorCacheClient cacheClientService) {
-        this.client = client;
+    public Operation( CalculatorCacheClient cacheClientService) {
         this.cacheClientService = cacheClientService;
     }
 
@@ -56,7 +53,7 @@ public class Operation implements OperationService {
     @SneakyThrows
     public AddResponse add(Add add) {
         AddResponse addResponse = objectFactory.createAddResponse();
-        if (client.isConnected()) {
+        if (cacheClientService.isConnected()) {
             if (cacheClientService.getMap(addResponse.getClass().getName()).containsKey(objectMapper.writeValueAsString(add))) {
                 return (AddResponse) getFromCache(add, addResponse);
             } else {
@@ -72,7 +69,7 @@ public class Operation implements OperationService {
     @SneakyThrows
     public DivideResponse divide(Divide divide) {
         DivideResponse divideResponse = objectFactory.createDivideResponse();
-        if (client.isConnected()) {
+        if (cacheClientService.isConnected()) {
             if (cacheClientService.getMap(divideResponse.getClass().getName()).containsKey(objectMapper.writeValueAsString(divide))) {
                 return (DivideResponse) getFromCache(divide, divideResponse);
             } else {
@@ -88,7 +85,7 @@ public class Operation implements OperationService {
     @SneakyThrows
     public MultiplyResponse multiply(Multiply multiply) {
         MultiplyResponse multiplyResponse = objectFactory.createMultiplyResponse();
-        if (client.isConnected()) {
+        if (cacheClientService.isConnected()) {
             if (cacheClientService.getMap(multiplyResponse.getClass().getName()).containsKey(objectMapper.writeValueAsString(multiply))) {
                 return (MultiplyResponse) getFromCache(multiply, multiplyResponse);
             } else {
@@ -104,7 +101,7 @@ public class Operation implements OperationService {
     @SneakyThrows
     public SubtractResponse subtract(Subtract subtract) {
         SubtractResponse subtractResponse = objectFactory.createSubtractResponse();
-        if (client.isConnected()) {
+        if (cacheClientService.isConnected()) {
             if (cacheClientService.getMap(subtractResponse.getClass().getName()).containsKey(objectMapper.writeValueAsString(subtract))) {
                 return (SubtractResponse) getFromCache(subtract, subtractResponse);
             } else {
