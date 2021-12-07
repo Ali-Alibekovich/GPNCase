@@ -9,6 +9,7 @@ import org.tempuri.Add;
 import org.tempuri.Divide;
 import org.tempuri.Multiply;
 import org.tempuri.Subtract;
+import com.example.task.services.operationService.OperationService;
 
 import javax.ws.rs.core.Response;
 
@@ -22,7 +23,7 @@ import static com.example.task.utils.Validator.validateValues;
 @RequestMapping("/")
 @Api(value = "CalculatorAPI")
 public class Controller implements IController {
-    final Operation operation;
+    final OperationService operation;
     public Controller(Operation operation) {
         this.operation = operation;
     }
