@@ -14,6 +14,7 @@ import com.example.task.services.operationService.OperationService;
 import javax.ws.rs.core.Response;
 
 import static com.example.task.utils.Validator.validateValues;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 
 /*
